@@ -11,6 +11,8 @@ var plugin_name = "homebridge-" + platform_name;
 var storagePath;
 var plugin_version;
 
+var HomeKitTypes = require('./lib/gen/HomeKitTypes');
+
 module.exports = function(homebridge) {
   console.log("homebridge API version: " + homebridge.version);
   
