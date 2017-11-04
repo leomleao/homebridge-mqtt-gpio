@@ -11,7 +11,14 @@ var plugin_name = "homebridge-" + platform_name;
 var storagePath;
 var plugin_version;
 
-var HomeKitTypes = require('./lib/gen/HomeKitTypes');
+
+// This will check if a bkp has already been made. If not it will do one and then replace the file with the custom one.
+if (!fs.existsSync('../../hap-nodejs/lib/gen/HomeKitTypes.js.bkp')) {
+  var fs = require('fs');
+  fs.createReadStream('../../hap-nodejs/lib/gen/HomeKitTypes.js').pipe(fs.createWriteStream('../../hap-nodejs/lib/gen/HomeKitTypes.js.bkp'));
+  fs.createReadStream('./lib/gen/HomeKitTypes.js').pipe(fs.createWriteStream('../../hap-nodejs/lib/gen/HomeKitTypes.js'));
+}
+
 
 module.exports = function(homebridge) {
   console.log("homebridge API version: " + homebridge.version);
