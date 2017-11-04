@@ -15,6 +15,13 @@ The idea is to provide a bridge to add and control accessories with a mqtt API.
 
 Note-RED is a visual tool for wiring together hardware devices, APIs and online services.
 
+# TODO
+
+* Add long lasting pi config - it vanishes at reboot
+* Add GPIO functionality :)
+* Add functionality for more than just switches and lamps.
+
+
 ### Installation
 
 If you are new to Homebridge, please first read the Homebridge [documentation](https://www.npmjs.com/package/homebridge).
