@@ -1,6 +1,6 @@
 {
   "name": "homebridge-mqtt-gpio",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "MQTT Plugin for Homebridge with gpio function",
   "license": "ISC",
   "author": {
