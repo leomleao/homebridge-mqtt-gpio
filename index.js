@@ -13,7 +13,7 @@ var plugin_version;
 
 
 // This will check if a bkp has already been made. If not it will do one and then replace the file with the custom one.
-Utils.replaceHomeKitTypes()
+Utils.replaceHomeKitTypes();
 
 
 module.exports = function(homebridge) {
