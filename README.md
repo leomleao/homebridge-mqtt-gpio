@@ -2,7 +2,7 @@
 
 [![NPM version][npm-image]][npm-url]
 
-[npm-image]: http://img.shields.io/npm/v/homebridge-mqtt.svg
+[npm-image]: http://img.shields.io/npm/v/homebridge-mqtt-gpio.svg
 [npm-url]: https://npmjs.org/package/homebridge-mqtt-gpio
 
 Homebridge-mqtt-gpio is a Plugin for Homebridge. The base is almost all on [homebridge-mqtt](https://github.com/cflurin/homebridge-mqtt). Please check their awesome work.
@@ -99,6 +99,7 @@ payload: {"ack": true, "message": "accessory 'flex_lamp' service_name 'light' is
 ```
 
 Then to add GPIO functionality you have to have the characteristic:
+
 **Note:** an accessory with the same `name` and `service_name` must be added before.
 
 ```sh
@@ -114,6 +115,7 @@ You can already test your accessory with your iOS device or using the mqtt API t
 
 
 You can also add the characteristic `GPIOPinInverted` if needed:
+
 **Note:** an accessory with the same `name` and `service_name` must be added before.
 
 ```sh
