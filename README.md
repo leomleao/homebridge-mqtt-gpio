@@ -5,7 +5,7 @@
 [npm-image]: http://img.shields.io/npm/v/homebridge-mqtt.svg
 [npm-url]: https://npmjs.org/package/homebridge-mqtt-gpio
 
-Homebridge-mqtt-gpio is a Plugin for Homebridge. The base is on [homebridge-mqtt](https://github.com/cflurin/homebridge-mqtt) and [homebridge-gpio-device](https://github.com/dubocr/homebridge-gpio-device) Please check their awesome work.
+Homebridge-mqtt-gpio is a Plugin for Homebridge. The base is almost all on [homebridge-mqtt](https://github.com/cflurin/homebridge-mqtt). Please check their awesome work.
 
 The motivation to do this is to add accessories that work exclusively with raspberry gpio dynamically.
 
@@ -17,9 +17,10 @@ Note-RED is a visual tool for wiring together hardware devices, APIs and online 
 
 # TODO
 
-* Add long lasting pi config - it vanishes at reboot
-* Add GPIO functionality :)
+*  ~~Add long lasting pi config - it vanishes at reboot ~~
+*  ~~Add GPIO functionality :) ~~
 * Add functionality for more than just switches and lamps.
+* Add functionality for pulse, defining timing too.
 
 
 ### Installation
@@ -37,6 +38,9 @@ Install homebridge-mqtt-gpio:
 ```sh
 sudo npm install -g homebridge-mqtt-gpio
 ```
+
+**Make sure rpio in working too **
+
 
 ### Configuration
 Add the mqtt-platform in config.json in your home directory inside `.homebridge`.
@@ -70,7 +74,59 @@ topic_type `single`: the data is sent to a single device, the accessory name is 
 topic : homebridge/from/set/flex_lamp
 ```
 
-#
+# mqtt GPIO API
+
+You can add a new accessory like this:
+
+### add accessory
+
+**Note:** for GPIO functionality you can only add the following services:
+* Switch
+* Lightbulb
+* Outlet
+
+
+```sh
+topic: homebridge/to/add
+payload: {"name": "flex_lamp", "service_name": "light", "service": "Switch"}
+```
+
+the response should be:
+
+```sh
+topic: homebridge/from/response
+payload: {"ack": true, "message": "accessory 'flex_lamp' service_name 'light' is added."}
+```
+
+Then to add GPIO functionality you have to have the characteristic:
+**Note:** an accessory with the same `name` and `service_name` must be added before.
+
+```sh
+topic: homebridge/to/set
+payload: {"name": "lights", "service_name": "teste", "characteristic": "GPIOPin",  "value": "[35]"}
+```
+
+The GPIO values **has** to be a valid JSON String. It can also contain multiple GPIOs, like `"[35,37]" ` 
+
+*GPIO numering is based on physical GPIOs only P1 - P40*
+
+You can already test your accessory with your iOS device or using the mqtt API to change the state of your accessory.
+
+
+You can also add the characteristic `GPIOPinInverted` if needed:
+**Note:** an accessory with the same `name` and `service_name` must be added before.
+
+```sh
+topic: homebridge/to/set
+payload: {"name": "lights", "service_name": "teste", "characteristic": "GPIOPinInverted",  "value": true}
+```
+
+
+There's no response from `homebridge/to/set`, but you can check the current setting with `homebridge/to/get`, please check bellow for the HOWTO
+
+
+---
+
 # mqtt API
 
 The data (payload) is sent/received in a JSON format using following topics:
@@ -95,20 +151,6 @@ The data (payload) is sent/received in a JSON format using following topics:
 **Note:** To add a service to an existing accessory (created prior version 0.3.0) please first remove the accessory and add it again.
 
 ## Howto examples
-
-### add accessory
-
-```sh
-topic: homebridge/to/add
-payload: {"name": "flex_lamp", "service_name": "light", "service": "Switch"}
-```
-
-response:
-
-```sh
-topic: homebridge/from/response
-payload: {"ack": true, "message": "accessory 'flex_lamp' service_name 'light' is added."}
-```
 
 ### add service
 **Note:** an accessory with the same `name` must be added before.
